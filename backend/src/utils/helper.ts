@@ -1,6 +1,6 @@
 import { Request } from 'express';
+import { Types } from 'mongoose';
 import { z } from 'zod';
-import { userDocument } from '../models/user.model';
 
 export const signupZod = z.object({
   username: z.string().trim(),
@@ -13,11 +13,20 @@ export const loginZod = z.object({
   username: z.string(),
   password: z.string().min(6),
 });
+
+export const updatePasswordZod = z.object({
+  oldPassword: z.string().min(6),
+  newPassword: z.string().min(6),
+});
+
 export const cookiesOptions: object = {
   httpOnly: true,
   secure: true,
 };
 
 export interface AuthRequest extends Request {
-  user?: userDocument;
+  // user: Types.ObjectId;
+  user: {
+    _id: Types.ObjectId;
+  };
 }
