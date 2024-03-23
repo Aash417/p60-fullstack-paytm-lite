@@ -6,6 +6,8 @@ import { Schema, model } from 'mongoose';
 type userType = {
   username: string;
   password: string;
+  firstName: string;
+  lastName: string;
 };
 export interface userDocument extends userType, Document {
   isPasswordCorrect(password: string): Promise<boolean>;
@@ -26,6 +28,18 @@ const userSchema = new Schema<userDocument>(
     password: {
       type: String,
       required: [true, 'password is required'],
+    },
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 50,
+    },
+    lastName: {
+      type: String,
+      required: true,
+      trim: true,
+      maxLength: 50,
     },
   },
   { timestamps: true }

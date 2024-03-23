@@ -17,7 +17,6 @@ export const registerUser = asyncHandler(
       });
 
     const { username, password } = req.body;
-    [username, password].some(field => field?.trim() === '');
 
     const user = await User.create({
       username: username.toLowerCase(),
