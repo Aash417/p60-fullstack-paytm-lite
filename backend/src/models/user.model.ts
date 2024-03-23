@@ -68,6 +68,6 @@ userSchema.methods.generateAccessToken = function () {
   );
 };
 
-const User = model<userDocument>('User', userSchema);
+const User = model<userDocument>('paytm-users', userSchema);
 
 export default User;

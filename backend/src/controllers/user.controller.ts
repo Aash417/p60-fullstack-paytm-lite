@@ -16,11 +16,12 @@ export const registerUser = asyncHandler(
         inputValidation,
       });
 
-    const { username, password } = req.body;
-
+    const { username, password, firstName, lastName } = req.body;
     const user = await User.create({
       username: username.toLowerCase(),
       password,
+      firstName,
+      lastName,
     });
 
     const createdUser = await User.findById(user._id).select(
