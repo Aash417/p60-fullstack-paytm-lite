@@ -24,6 +24,11 @@ export const updateAccountDetailsZod = z.object({
   lastName: z.string().trim(),
 });
 
+export const transferMoneyZod = z.object({
+  amount: z.number(),
+  sendTo: z.string().trim(),
+});
+
 export const cookiesOptions: object = {
   httpOnly: true,
   secure: true,

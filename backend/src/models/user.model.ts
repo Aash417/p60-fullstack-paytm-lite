@@ -28,6 +28,7 @@ const userSchema = new Schema<userDocument>(
     password: {
       type: String,
       required: [true, 'password is required'],
+      select: false,
     },
     firstName: {
       type: String,

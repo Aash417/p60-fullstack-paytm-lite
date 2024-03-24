@@ -46,7 +46,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
 
   const { username, password } = req.body;
 
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username }).select('+password');
   if (!user) throw new ApiError(404, 'User does not exist');
 
   const isPasswordValid = await user.isPasswordCorrect(password);
@@ -79,11 +79,11 @@ export const updatePassword = asyncHandler(async (req: AuthRequest, res: Respons
     });
 
   const { oldPassword, newPassword } = req.body;
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).select('+password');
   const isPasswordCorrect = await user.isPasswordCorrect(oldPassword);
   if (!isPasswordCorrect) throw new ApiError(400, 'Incorrect old password');
 
-  if (oldPassword === newPassword) throw new ApiError(400, 'New password cannt be old password');
+  if (oldPassword === newPassword) throw new ApiError(400, 'New password can not be old password');
   user.password = newPassword;
   await user.save({ validateBeforeSave: false });
 
