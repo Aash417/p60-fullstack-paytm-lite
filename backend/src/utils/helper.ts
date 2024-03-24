@@ -19,6 +19,11 @@ export const updatePasswordZod = z.object({
   newPassword: z.string().min(6),
 });
 
+export const updateAccountDetailsZod = z.object({
+  firstName: z.string().trim(),
+  lastName: z.string().trim(),
+});
+
 export const cookiesOptions: object = {
   httpOnly: true,
   secure: true,
@@ -26,7 +31,7 @@ export const cookiesOptions: object = {
 
 export interface AuthRequest extends Request {
   // user: Types.ObjectId;
-  user: {
+  user?: {
     _id: Types.ObjectId;
   };
 }

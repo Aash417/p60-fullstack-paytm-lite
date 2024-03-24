@@ -33,10 +33,10 @@ export const registerUser = asyncHandler(async (req: Request, res: Response) => 
 });
 
 export const loginUser = asyncHandler(async (req: Request, res: Response) => {
-  const inputValidation = loginZod.safeParse(req.body);
-  if (!inputValidation.success)
+  const inputvalidation = loginZod.safeParse(req.body);
+  if (!inputvalidation.success)
     return res.status(422).json({
-      inputValidation,
+      inputvalidation,
     });
 
   const { username, password } = req.body;
@@ -85,6 +85,31 @@ export const updatePassword = asyncHandler(async (req: AuthRequest, res: Respons
   return res
     .status(200)
     .json(new ApiResponse(200, { newPassword }, 'Password updated successfully'));
+});
+
+export const updateAccountDetails = asyncHandler(async (req: AuthRequest, res: Response) => {
+  const { firstName, lastName } = req.body;
+
+  if (!firstName && !lastName) throw new ApiError(500, 'Provide at least one field to update');
+  type fieldType = {
+    firstName?: string;
+    lastName?: string;
+  };
+  const updateFields: fieldType = {};
+
+  if (firstName) {
+    updateFields.firstName = firstName;
+  }
+  if (lastName) {
+    updateFields.lastName = lastName;
+  }
+  const updatedUser = await User.findByIdAndUpdate(req.user._id, updateFields, {
+    new: true,
+  }).select('-password');
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, updatedUser, 'account details updated successfully'));
 });
 
 export const test = asyncHandler(async (req: AuthRequest, res: Response) => {
