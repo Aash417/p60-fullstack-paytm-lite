@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { BottomWarning } from '../components/BottomWarning';
 import { Button } from '../components/Button';
@@ -49,10 +50,11 @@ export const Signup = () => {
 						label={'Password'}
 					/>
 					<div className='pt-4'>
+						<Toaster />
 						<Button
 							onClick={async () => {
 								const response = await axios.post(
-									'http://localhost:3000/api/v1/user/signup',
+									'http://localhost:4000/api/v1/users/signup',
 									{
 										username,
 										firstName,
@@ -60,8 +62,14 @@ export const Signup = () => {
 										password,
 									}
 								);
+								if (response.status === 201)
+									toast.success('user created successfully.');
+								else toast.error('Some error occurred. Try again.');
+
 								localStorage.setItem('token', response.data.token);
-								navigate('/dashboard');
+								setTimeout(() => {
+									navigate('/signin');
+								}, 2000);
 							}}
 							label={'Sign up'}
 						/>
