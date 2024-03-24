@@ -5,7 +5,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import mongoSanitize from 'express-mongo-sanitize';
 import helmet from 'helmet';
 import hpp from 'hpp';
-import userRouter from './routes/user.routes';
+import { accountRouter, userRouter } from './routes/index';
 import { ApiError, errorHandler } from './utils/index';
 
 const app = express();
@@ -33,7 +33,7 @@ app.use(compression());
 
 // Routes
 app.use('/api/v1/users', userRouter);
-
+app.use('/api/v1/accounts', accountRouter);
 
 // Global error handler
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
@@ -41,4 +41,3 @@ app.all('*', (req: Request, res: Response, next: NextFunction) => {
 });
 app.use(errorHandler);
 export { app };
-
