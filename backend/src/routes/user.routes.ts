@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  getUser,
   loginUser,
   logoutUser,
   registerUser,
@@ -17,7 +18,7 @@ router.route('/logout').get(logoutUser);
 
 router.route('/updatePassword').post(protect, updatePassword);
 router.route('/updateAccountDetails').post(protect, updateAccountDetails);
-
+router.route('/getUser').get(getUser);
 
 router.route('/check').get(protect, test);
 

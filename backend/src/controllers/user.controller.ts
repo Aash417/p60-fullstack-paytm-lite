@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from '../models/user.model';
+import { Account, User } from '../models/index';
 import {
   AuthRequest,
   cookiesOptions,
@@ -22,6 +22,11 @@ export const registerUser = asyncHandler(async (req: Request, res: Response) => 
     password,
     firstName,
     lastName,
+  });
+
+  await Account.create({
+    userId: user._id,
+    balance: Math.floor(Math.random() * 10000) + 1,
   });
 
   const createdUser = await User.findById(user._id).select('-password -_id -__v -updatedAt');
@@ -110,6 +115,33 @@ export const updateAccountDetails = asyncHandler(async (req: AuthRequest, res: R
   return res
     .status(200)
     .json(new ApiResponse(200, updatedUser, 'account details updated successfully'));
+});
+
+export const getUser = asyncHandler(async (req: Request, res: Response) => {
+  const filter = req.query.filter || '';
+
+  const users = await User.find({
+    $or: [
+      {
+        firstName: {
+          $regex: filter,
+        },
+      },
+      {
+        lastName: {
+          $regex: filter,
+        },
+      },
+    ],
+  });
+  const user = users.map(user => ({
+    username: user.username,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    _id: user._id,
+  }));
+
+  return res.status(200).json(new ApiResponse(200, user, 'user data fetched.'));
 });
 
 export const test = asyncHandler(async (req: AuthRequest, res: Response) => {
