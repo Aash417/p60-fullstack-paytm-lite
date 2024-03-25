@@ -15,6 +15,25 @@ export const Signup = () => {
 	const [password, setPassword] = useState('');
 	const navigate = useNavigate();
 
+	async function sendReq() {
+		try {
+			const response = await axios.post('http://localhost:4000/api/v1/users/signup', {
+				username,
+				firstName,
+				lastName,
+				password,
+			});
+			if (response.status === 201) toast.success('user created successfully.');
+			else toast.error('Some error occurred. Try again.');
+
+			setTimeout(() => {
+				navigate('/signin');
+			}, 2000);
+		} catch (error) {
+			console.log(error);
+			toast.error(error.message);
+		}
+	}
 	return (
 		<div className='flex justify-center h-screen bg-slate-300'>
 			<div className='flex flex-col justify-center'>
@@ -51,28 +70,7 @@ export const Signup = () => {
 					/>
 					<div className='pt-4'>
 						<Toaster />
-						<Button
-							onClick={async () => {
-								const response = await axios.post(
-									'http://localhost:4000/api/v1/users/signup',
-									{
-										username,
-										firstName,
-										lastName,
-										password,
-									}
-								);
-								if (response.status === 201)
-									toast.success('user created successfully.');
-								else toast.error('Some error occurred. Try again.');
-
-								localStorage.setItem('token', response.data.token);
-								setTimeout(() => {
-									navigate('/signin');
-								}, 2000);
-							}}
-							label={'Sign up'}
-						/>
+						<Button onClick={sendReq} label={'Sign up'} />
 					</div>
 					<BottomWarning
 						label={'Already have an account?'}

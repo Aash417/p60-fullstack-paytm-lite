@@ -61,7 +61,16 @@ export const loginUser = asyncHandler(async (req: Request, res: Response) => {
   return res
     .status(200)
     .cookie('accessToken', accessToken, cookiesOptions)
-    .json(new ApiResponse(200, { user: loggedInUser }, 'Logged in successfully'));
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: loggedInUser,
+          paytmToken: accessToken,
+        },
+        'Logged in successfully'
+      )
+    );
 });
 
 export const logoutUser = asyncHandler(async (req: AuthRequest, res: Response) => {
