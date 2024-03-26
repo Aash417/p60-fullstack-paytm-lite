@@ -8,6 +8,21 @@ export const SendMoney = () => {
 	const name = searchParams.get('name');
 	const [amount, setAmount] = useState(0);
 
+	async function sendReq() {
+		axios.post(
+			'http://localhost:3000/api/v1/account/transfer',
+			{
+				to: id,
+				amount,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('paytmToken')}`,
+				},
+			}
+		);
+	}
+
 	return (
 		<div className='flex justify-center h-screen bg-gray-100'>
 			<div className='flex flex-col justify-center h-full'>
@@ -41,21 +56,7 @@ export const SendMoney = () => {
 								/>
 							</div>
 							<button
-								onClick={() => {
-									axios.post(
-										'http://localhost:3000/api/v1/account/transfer',
-										{
-											to: id,
-											amount,
-										},
-										{
-											headers: {
-												Authorization:
-													'Bearer ' + localStorage.getItem('token'),
-											},
-										}
-									);
-								}}
+								onClick={sendReq}
 								className='justify-center w-full h-10 px-4 py-2 text-sm font-medium text-white transition-colors bg-green-500 rounded-md ring-offset-background'
 							>
 								Initiate Transfer

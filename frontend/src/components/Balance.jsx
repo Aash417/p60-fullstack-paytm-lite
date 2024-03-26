@@ -1,15 +1,25 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-export const Balance = ({ value }) => {
+export const Balance = () => {
+	const [balance, setBalance] = useState(0);
+
 	useEffect(() => {
-		axios.get('http://localhost:4000/api/v1/accounts/balance').then((res) => console.log(res));
-	}, []);
+		axios
+			.get('http://localhost:4000/api/v1/accounts/balance', {
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('paytmToken')}`,
+				},
+			})
+			.then((res) => {
+				setBalance(res.data.data.balance);
+			});
+	}, [balance]);
 
 	return (
 		<div className='flex'>
 			<div className='text-lg font-bold'>Your balance</div>
-			<div className='ml-4 text-lg font-semibold'>Rs {value}</div>
+			<div className='ml-4 text-lg font-semibold'>Rs {balance}</div>
 		</div>
 	);
 };
