@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { BottomWarning } from '../components/BottomWarning';
 import { Button } from '../components/Button';
@@ -53,7 +53,6 @@ export const Signin = () => {
 						label={'Password'}
 					/>
 					<div className='pt-4'>
-						<Toaster />;
 						<Button label={'Sign in'} onClick={sendReq} />
 					</div>
 					<BottomWarning
