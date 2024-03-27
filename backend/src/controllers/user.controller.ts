@@ -153,6 +153,12 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
   return res.status(200).json(new ApiResponse(200, user, 'user data fetched.'));
 });
 
+export const checkUser = asyncHandler(async (req: AuthRequest, res: Response) => {
+  const user = await User.findById(req.user._id);
+
+  res.status(200).json({ success: true, user });
+});
+
 export const test = asyncHandler(async (req: AuthRequest, res: Response) => {
   const user = req.user;
 
