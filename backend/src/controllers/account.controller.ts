@@ -32,7 +32,7 @@ export const transferMoney = asyncHandler(async (req: AuthRequest, res: Response
   }
 
   // 2. check if user who receive money exists
-  const receiver = await User.findOne({ username: sendTo }).session(session);
+  const receiver = await User.findOne({ _id: sendTo }).session(session);
   if (!receiver) {
     await session.abortTransaction();
     throw new ApiError(404, 'User you are trying to send money does not have an bank account');
@@ -52,7 +52,7 @@ export const transferMoney = asyncHandler(async (req: AuthRequest, res: Response
       new ApiResponse(
         200,
         { success: true, remaining_Balance: remainingBal.balance },
-        `Successfully transfer money to ${sendTo}`
+        `Successfully transfer money to ${receiver.firstName}`
       )
     );
 });

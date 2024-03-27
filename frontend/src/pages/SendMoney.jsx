@@ -1,26 +1,38 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const SendMoney = () => {
 	const [searchParams] = useSearchParams();
 	const id = searchParams.get('id');
 	const name = searchParams.get('name');
 	const [amount, setAmount] = useState(0);
-
+	const navigate = useNavigate();
 	async function sendReq() {
-		axios.post(
-			'http://localhost:3000/api/v1/account/transfer',
-			{
-				to: id,
-				amount,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('paytmToken')}`,
+		try {
+			const { data } = await axios.post(
+				'http://localhost:4000/api/v1/accounts/transfer',
+				{
+					sendTo: id,
+					amount: Number(amount),
 				},
-			}
-		);
+				{
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('paytmToken')}`,
+					},
+				}
+			);
+			if (data.statusCode == 200) {
+				toast.success(data.message);
+				setTimeout(() => {
+					navigate('/dashboard');
+				}, 2000);
+			} else toast.error('Transfer failed');
+		} catch (error) {
+			console.log(error);
+			toast.error(error.message);
+		}
 	}
 
 	return (
