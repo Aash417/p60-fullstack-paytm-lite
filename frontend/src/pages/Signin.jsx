@@ -19,7 +19,6 @@ export const Signin = () => {
 				username,
 				password,
 			});
-			console.log(data);
 			if (data.statusCode == 200) {
 				toast.success(data.message);
 				localStorage.setItem('paytmToken', data.data.paytmToken);

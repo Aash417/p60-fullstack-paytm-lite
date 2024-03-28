@@ -4,19 +4,19 @@ import { z } from 'zod';
 
 export const signupZod = z.object({
   username: z.string().trim(),
-  password: z.string().min(6),
+  password: z.string(),
   firstName: z.string().trim(),
   lastName: z.string().trim(),
 });
 
 export const loginZod = z.object({
   username: z.string(),
-  password: z.string().min(6),
+  password: z.string(),
 });
 
 export const updatePasswordZod = z.object({
-  oldPassword: z.string().min(6),
-  newPassword: z.string().min(6),
+  oldPassword: z.string(),
+  newPassword: z.string(),
 });
 
 export const updateAccountDetailsZod = z.object({

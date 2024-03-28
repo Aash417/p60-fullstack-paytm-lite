@@ -155,7 +155,6 @@ export const getUser = asyncHandler(async (req: Request, res: Response) => {
 
 export const checkUser = asyncHandler(async (req: AuthRequest, res: Response) => {
   const user = await User.findById(req.user._id);
-
   res.status(200).json({ success: true, user });
 });
 

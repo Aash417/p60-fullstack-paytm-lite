@@ -13,7 +13,6 @@ export const Users = () => {
 		axios
 			.get('http://localhost:4000/api/v1/users/getUser?filter=' + filter)
 			.then((response) => {
-				// console.log(response.data.data);
 				setUsers(response.data.data);
 			});
 	}, [filter]);
