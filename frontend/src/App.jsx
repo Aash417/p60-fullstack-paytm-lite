@@ -5,6 +5,7 @@ import { SendMoney } from './pages/SendMoney';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
 
+	console.log('import.meta.env.VITE_BackendUrl :', import.meta.env.VITE_BackendUrl);
 function App() {
 	return (
 		<>

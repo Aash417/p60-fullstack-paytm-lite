@@ -11,7 +11,7 @@ export const Users = () => {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:4000/api/v1/users/getUser?filter=' + filter)
+			.get(`${import.meta.env.VITE_BackendUrl}/api/v1/users/getUser?filter=` + filter)
 			.then((response) => {
 				setUsers(response.data.data);
 			});

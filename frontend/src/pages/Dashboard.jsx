@@ -19,7 +19,7 @@ export const Dashboard = () => {
 				return;
 			}
 			axios
-				.get('http://localhost:4000/api/v1/users/currentUser', {
+				.get(`${import.meta.env.VITE_BackendUrl}/api/v1/users/currentUser`, {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},

@@ -12,7 +12,7 @@ export const SendMoney = () => {
 	async function sendReq() {
 		try {
 			const { data } = await axios.post(
-				'http://localhost:4000/api/v1/accounts/transfer',
+				`${import.meta.env.VITE_BackendUrl}/api/v1/accounts/transfer`,
 				{
 					sendTo: id,
 					amount: Number(amount),

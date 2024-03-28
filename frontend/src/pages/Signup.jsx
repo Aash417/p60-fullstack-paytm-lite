@@ -17,12 +17,15 @@ export const Signup = () => {
 
 	async function sendReq() {
 		try {
-			const response = await axios.post('http://localhost:4000/api/v1/users/signup', {
-				username,
-				firstName,
-				lastName,
-				password,
-			});
+			const response = await axios.post(
+				`${import.meta.env.VITE_BackendUrl}/api/v1/users/signup`,
+				{
+					username,
+					firstName,
+					lastName,
+					password,
+				}
+			);
 			if (response.status === 201) toast.success('user created successfully.');
 			else toast.error('Some error occurred. Try again.');
 

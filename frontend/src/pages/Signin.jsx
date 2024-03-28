@@ -15,10 +15,13 @@ export const Signin = () => {
 
 	async function sendReq() {
 		try {
-			const { data } = await axios.post('http://localhost:4000/api/v1/users/login', {
-				username,
-				password,
-			});
+			const { data } = await axios.post(
+				`${import.meta.env.VITE_BackendUrl}/api/v1/users/login`,
+				{
+					username,
+					password,
+				}
+			);
 			if (data.statusCode == 200) {
 				toast.success(data.message);
 				localStorage.setItem('paytmToken', data.data.paytmToken);

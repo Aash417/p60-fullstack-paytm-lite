@@ -6,7 +6,7 @@ export const Balance = () => {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:4000/api/v1/accounts/balance', {
+			.get(`${import.meta.env.VITE_BackendUrl}/api/v1/accounts/balance`, {
 				headers: {
 					Authorization: `Bearer ${localStorage.getItem('paytmToken')}`,
 				},
